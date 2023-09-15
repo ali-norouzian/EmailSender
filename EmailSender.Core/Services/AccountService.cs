@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmailSender.Core.Services
 {
@@ -55,10 +56,25 @@ namespace EmailSender.Core.Services
             return result;
         }
 
+        public async Task<IdentityResult> UpdateUser(UpdateProfileDto dto, ClaimsPrincipal userClaims)
+        {
+            var authUserId = GetCurrentUserId(userClaims);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == authUserId);
+            user = _mapper.Map(dto, user);
+            var result = await _userManager.UpdateAsync(user);
+
+            return result;
+        }
+
+        public string GetCurrentUserId(ClaimsPrincipal userClaims)
+        {
+            return userClaims.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
         public async Task<ProfileDto> GetCurrentUserProfile(ClaimsPrincipal userClaims)
         {
-            var authUserName = userClaims.FindFirstValue(ClaimTypes.Name);
-            var user = await _userManager.FindByNameAsync(authUserName);
+            var authUserId = GetCurrentUserId(userClaims);
+            var user = await _userManager.FindByIdAsync(authUserId);
             var profileDto = _mapper.Map<ProfileDto>(user);
 
             return profileDto;

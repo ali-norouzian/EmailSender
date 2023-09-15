@@ -8,8 +8,16 @@ namespace EmailSender.Core.Profiles
     {
         public AutoMapperProfile()
         {
+            #region Account
+
             CreateMap<RegisterDto, AppUser>();
             CreateMap<AppUser, ProfileDto>();
+            CreateMap<UpdateProfileDto, AppUser>()
+                .ForAllMembers(opts =>
+                    opts.Condition((src, dest, sourceMember) =>
+                    sourceMember != null)); ;
+
+            #endregion
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using EmailSender.Core.DTOs.Account;
 using EmailSender.Core.Interfaces;
 using EmailSender.Data.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmailSender.API.Controllers
 {
@@ -55,6 +56,15 @@ namespace EmailSender.API.Controllers
             return Ok(profileDto);
         }
 
+        [Authorize]
+        [HttpPut("profile")]
+        public async Task<IActionResult> ProfileUpdate(UpdateProfileDto dto)
+        {
+            var result = await _accountService.UpdateUser(dto, User);
+            if (!result.Succeeded)
+                return BadRequest(result);
 
+            return Ok(result);
+        }
     }
 }

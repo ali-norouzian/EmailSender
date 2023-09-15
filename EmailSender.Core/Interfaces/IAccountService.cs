@@ -10,6 +10,9 @@ namespace EmailSender.Core.Interfaces
     {
         Task<string> GenerateJwt(AppUser appUser);
         Task<IdentityResult> CreateUser(RegisterDto registerDto);
+        Task<IdentityResult> UpdateUser(UpdateProfileDto dto, ClaimsPrincipal userClaims);
+        string GetCurrentUserId(ClaimsPrincipal userClaims);
         Task<ProfileDto> GetCurrentUserProfile(ClaimsPrincipal userClaims);
+
     }
 }

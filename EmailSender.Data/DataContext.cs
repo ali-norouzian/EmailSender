@@ -9,5 +9,10 @@ namespace EmailSender.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
+
+
+        public DbSet<EmailSendingStatus> EmailSendingStatus { get; set; }
+        public DbSet<EmailSendingGroup> EmailSendingGroup { get; set; }
+
     }
 }

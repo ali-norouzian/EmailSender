@@ -13,6 +13,10 @@ namespace EmailSender.Core.Interfaces
         Task<IdentityResult> UpdateUser(UpdateProfileDto dto, ClaimsPrincipal userClaims);
         string GetCurrentUserId(ClaimsPrincipal userClaims);
         Task<ProfileDto> GetCurrentUserProfile(ClaimsPrincipal userClaims);
-
+        Task<int> GetCountOfUsers();
+        Task<bool> EmailSendingGroupIsPending(int groupId);
+        Task SendEmailTo(int groupId, DateTime? startJoinedDate = null, DateTime? endJoinedDate = null);
+        Task<(int, int, int)> GetGroupEmailSendingStatus(int groupId);
     }
+
 }

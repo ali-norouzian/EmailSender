@@ -1,12 +1,10 @@
-﻿using System.Security.Claims;
-using AutoMapper;
+﻿using AutoMapper;
 using EmailSender.Core.DTOs.Account;
 using EmailSender.Core.Interfaces;
 using EmailSender.Data.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 
 namespace EmailSender.API.Controllers
 {
